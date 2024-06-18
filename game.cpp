@@ -28,7 +28,7 @@ static void simulate_game(Input* input, float dt)
 	clear_screen(0xA020F0);
 	draw_rect(0, 0, arena_half_size_x, arena_half_size_y, 0x000000);
 
-	if (current_gamemode == GM_GAMEPLAY) {
+	
 
 #if 0	
 		if (is_down(BUTTON_W)) player_pos_1 += .3f;
@@ -40,9 +40,9 @@ static void simulate_game(Input* input, float dt)
 		if (ball_p_y - 10 < player_pos_1) player_pos_1 -= .2f;
 #endif
 
-		if (is_down(BUTTON_UP)) player_pos_2 += .3f;
+		if (is_down(BUTTON_UP)) player_pos_2 += .2f;
 		if (is_down(BUTTON_SHIFT) && is_down(BUTTON_UP)) player_pos_2 += .4f;
-		if (is_down(BUTTON_DOWN)) player_pos_2 -= .3f;
+		if (is_down(BUTTON_DOWN)) player_pos_2 -= .2f;
 		if (is_down(BUTTON_SHIFT) && is_down(BUTTON_DOWN)) player_pos_2 -= .4f;
 
 		if (player_pos_1 + player_half_size_y > arena_half_size_y)
@@ -129,12 +129,6 @@ static void simulate_game(Input* input, float dt)
 		draw_number(player2_score, 10, 40, 1.f, 0xbbffbb);
 
 		draw_rect(ball_p_x, ball_p_y, ball_half_size, ball_half_size, 0xffffff); // ball
-
-	}
- else {
-	 draw_rect(0, 0, 10, 10, 0xff0000);
-	}
-
 
 
 }

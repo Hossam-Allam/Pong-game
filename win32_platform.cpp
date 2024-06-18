@@ -73,6 +73,18 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 
 	Input input = {};
 
+	float delta_time = 0.016666f;
+	LARGE_INTEGER frame_begin_time;
+	QueryPerformanceCounter(&frame_begin_time);
+
+	float performance_frequency;
+	{
+		LARGE_INTEGER perf;
+		QueryPerformanceFrequency(&perf);
+		performance_frequency = (float)perf.QuadPart;
+	}
+
+
 	while (running) {
 		MSG message;
 
@@ -96,11 +108,19 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 					case VK_DOWN: {
 						input.buttons[BUTTON_DOWN].is_down = is_down;
 						input.buttons[BUTTON_DOWN].changed = true;
-					}
+					} break;
 					case VK_SHIFT: {
 						input.buttons[BUTTON_SHIFT].is_down = is_down;
 						input.buttons[BUTTON_SHIFT].changed = true;
-					}
+					} break;
+					case 0x57: { 
+						input.buttons[BUTTON_W].is_down = is_down;
+						input.buttons[BUTTON_W].changed = true;
+					} break;
+					case 0x53: { 
+						input.buttons[BUTTON_S].is_down = is_down;
+						input.buttons[BUTTON_S].changed = true;
+					} break;
 				}
 			}
 				break;
@@ -112,11 +132,16 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 		}
 
 		//simulation part
-		simulate_game(&input);
+		simulate_game(&input, delta_time);
 
 
 		//rendering
 		StretchDIBits(hdc, 0, 0, render_state.width, render_state.height, 0, 0, render_state.width, render_state.height, render_state.memory, &render_state.bitmapinfo, DIB_RGB_COLORS, SRCCOPY);
+
+		LARGE_INTEGER frame_end_time;
+		QueryPerformanceCounter(&frame_end_time);
+		delta_time = (float)(frame_end_time.QuadPart - frame_begin_time.QuadPart) / performance_frequency;
+		frame_begin_time = frame_end_time;
 
 	}
 	

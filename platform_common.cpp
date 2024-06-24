@@ -13,7 +13,9 @@ enum
 	BUTTON_SHIFT,
 	BUTTON_S,
 	BUTTON_W,
-	BUTTON_COUNT
+	BUTTON_ENTER,
+	BUTTON_COUNT,
+
 };
 
 struct Input

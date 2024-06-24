@@ -109,9 +109,21 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 						input.buttons[BUTTON_DOWN].is_down = is_down;
 						input.buttons[BUTTON_DOWN].changed = true;
 					} break;
+					case VK_LEFT: {
+						input.buttons[BUTTON_LEFT].is_down = is_down;
+						input.buttons[BUTTON_LEFT].changed = true;
+					} break;
+					case VK_RIGHT: {
+						input.buttons[BUTTON_RIGHT].is_down = is_down;
+						input.buttons[BUTTON_RIGHT].changed = true;
+					} break;
 					case VK_SHIFT: {
 						input.buttons[BUTTON_SHIFT].is_down = is_down;
 						input.buttons[BUTTON_SHIFT].changed = true;
+					} break;
+					case VK_RETURN: {
+						input.buttons[BUTTON_ENTER].is_down = is_down;
+						input.buttons[BUTTON_ENTER].changed = true;
 					} break;
 					case 0x57: { 
 						input.buttons[BUTTON_W].is_down = is_down;

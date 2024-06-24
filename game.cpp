@@ -22,28 +22,34 @@ enum Gamemode {
 
 Gamemode current_gamemode;
 
+int button;
+bool enemy_is_ai;
 
-static void simulate_game(Input* input, float dt)
-{
-	clear_screen(0xA020F0);
-	draw_rect(0, 0, arena_half_size_x, arena_half_size_y, 0x000000);
 
-	
+	static void simulate_game(Input * input, float dt)
+	{
+		clear_screen(0xA020F0);
+		draw_rect(0, 0, arena_half_size_x, arena_half_size_y, 0x000000);
 
-#if 0	
-		if (is_down(BUTTON_W)) player_pos_1 += .3f;
-		if (is_down(BUTTON_SHIFT) && is_down(BUTTON_W)) player_pos_1 += .4f;
-		if (is_down(BUTTON_S)) player_pos_1 -= .3f;
-		if (is_down(BUTTON_SHIFT) && is_down(BUTTON_S)) player_pos_1 -= .4f;
-#else
-		if (ball_p_y + 10 > player_pos_1) player_pos_1 += .2f;
-		if (ball_p_y - 10 < player_pos_1) player_pos_1 -= .2f;
-#endif
+		if (current_gamemode == GM_GAMEPLAY)
+		{
+
+
+			if (!enemy_is_ai) {
+				if (is_down(BUTTON_W)) player_pos_1 += .2f;
+				if (is_down(BUTTON_SHIFT) && is_down(BUTTON_W)) player_pos_1 += .3f;
+				if (is_down(BUTTON_S)) player_pos_1 -= .2f;
+				if (is_down(BUTTON_SHIFT) && is_down(BUTTON_S)) player_pos_1 -= .3f;
+			}
+			else {
+				if (ball_p_y + 10 > player_pos_1) player_pos_1 += .1f;
+				if (ball_p_y - 10 < player_pos_1) player_pos_1 -= .1f;
+			}
 
 		if (is_down(BUTTON_UP)) player_pos_2 += .2f;
-		if (is_down(BUTTON_SHIFT) && is_down(BUTTON_UP)) player_pos_2 += .4f;
+		if (is_down(BUTTON_SHIFT) && is_down(BUTTON_UP)) player_pos_2 += .3f;
 		if (is_down(BUTTON_DOWN)) player_pos_2 -= .2f;
-		if (is_down(BUTTON_SHIFT) && is_down(BUTTON_DOWN)) player_pos_2 -= .4f;
+		if (is_down(BUTTON_SHIFT) && is_down(BUTTON_DOWN)) player_pos_2 -= .3f;
 
 		if (player_pos_1 + player_half_size_y > arena_half_size_y)
 		{
@@ -130,5 +136,28 @@ static void simulate_game(Input* input, float dt)
 
 		draw_rect(ball_p_x, ball_p_y, ball_half_size, ball_half_size, 0xffffff); // ball
 
+	}
+		else {
+			if (pressed(BUTTON_LEFT) || pressed(BUTTON_RIGHT)) button = !button;
+
+			if (pressed(BUTTON_ENTER))
+			{
+				current_gamemode = GM_GAMEPLAY;
+				enemy_is_ai = button ? 0 : 1;
+			}
+
+			if (button == 0)
+			{
+				draw_rect(40, 0, 10, 10, 0xcccccc);
+				draw_rect(-40, 0, 30, 30, 0xA020F0);
+				draw_text("AI", -45, 2, 1, 0xff00ff);
+			}
+			else {
+				draw_rect(40, 0, 30, 30, 0xA020F0);
+				draw_rect(-40, 0, 10, 10, 0xcccccc);
+				draw_text("MULTIPLAYER", 20, 2, 0.7, 0xff00ff);
+			}
+
+		}
 
 }

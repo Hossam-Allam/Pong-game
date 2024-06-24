@@ -136,6 +136,10 @@ bool enemy_is_ai;
 
 		draw_rect(ball_p_x, ball_p_y, ball_half_size, ball_half_size, 0xffffff); // ball
 
+		if (pressed(BUTTON_ESCAPE))
+		{
+			current_gamemode = GM_MENU;
+		}
 	}
 		else {
 			if (pressed(BUTTON_LEFT) || pressed(BUTTON_RIGHT)) button = !button;

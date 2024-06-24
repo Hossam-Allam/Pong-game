@@ -125,6 +125,10 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 						input.buttons[BUTTON_ENTER].is_down = is_down;
 						input.buttons[BUTTON_ENTER].changed = true;
 					} break;
+					case VK_ESCAPE: {
+						input.buttons[BUTTON_ESCAPE].is_down = is_down;
+						input.buttons[BUTTON_ESCAPE].changed = true;
+					} break;
 					case 0x57: { 
 						input.buttons[BUTTON_W].is_down = is_down;
 						input.buttons[BUTTON_W].changed = true;
